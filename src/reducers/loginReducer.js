@@ -2,7 +2,7 @@ import loginService from '../services/login'
 import { userConstants } from '../constants/user.constants'
 import { history } from '../_helpers/history'
 
-let user = window.localStorage.getItem('loggedBracketAppUser')
+let user = window.localStorage.getItem(userConstants.LOCAL_STORAGE)
 
 const initialState = user !== 'undefined' ? 
                 { loggedIn: true, user: JSON.parse(user) } : {}
@@ -15,7 +15,7 @@ const reducer = (state=initialState, action) => {
         user: action.data
       }
     case userConstants.LOGIN_SUCCESS:
-      window.localStorage.setItem('loggedBracketAppUser', 
+      window.localStorage.setItem(userConstants.LOCAL_STORAGE, 
                     JSON.stringify(action.data))
       return {
         loggedIn: true,
@@ -24,7 +24,7 @@ const reducer = (state=initialState, action) => {
     case userConstants.LOGIN_FAILURE:
       return {}
     case userConstants.LOGOUT:
-      window.localStorage.removeItem('loggedBracketAppUser')
+      window.localStorage.removeItem(userConstants.LOCAL_STORAGE)
       console.log('LOGGED OUT')
       
       return {}

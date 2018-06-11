@@ -6,12 +6,17 @@ import { Table, Container, Menu,
 
 import { initializeGames, saveScores } from './reducers/gameReducer'
 import { initializeTeams } from './reducers/teamReducer'
+import { initializeBracket } from './reducers/bracketReducer'
 import { logout } from './reducers/loginReducer'
 import { connect } from 'react-redux'
 
 import GameList from './components/GameList'
 import LoginForm from './components/LoginForm'
 import store from './store'
+
+import bracketService from './services/bracket'
+import { userConstants } from './constants/user.constants'
+
 //import Home ja Bracket componentseista
 
 
@@ -71,6 +76,18 @@ class App extends React.Component {
     this.props.initializeTeams()
     console.log(store.getState())
     
+    const loggedUserJSON = window.localStorage.getItem(userConstants.LOCAL_STORAGE)
+    console.log(loggedUserJSON)
+    
+    if (loggedUserJSON) {
+      console.log('ROKIIIIIIASASD')
+      
+      const user = JSON.parse(loggedUserJSON)
+      bracketService.setToken(user.token)
+      console.log('ROKIIII')
+      
+      this.props.initializeBracket()
+    }
   }
 
 
@@ -90,6 +107,7 @@ export default connect(
   null,
   { initializeGames,
     initializeTeams, 
+    initializeBracket,
     saveScores,
     logout
   }
