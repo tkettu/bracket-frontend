@@ -13,8 +13,6 @@ const reducer = (store = [], action) => {
       const changedScore = { ...scoreChanged, 
               score_home: action.data.newGame.score_home,
               score_away: action.data.newGame.score_away,}
-      console.log(changedScore)
-
       return store.map(game => game.id !== id ? game : changedScore)
     }
   }
@@ -37,9 +35,7 @@ const deepPick = (fields, object={}) => {
 const getAllGames = (matches) => {
   const groups = ["a", "b", "c", "d", "e", "f", "g", "h"]
   const games = groups.map(g => deepPick(g.concat(".matches"), matches ) )
-  console.log(games)
   const rGames = [].concat.apply([], games)
-  
   
   return rGames.sort( function(a, b) {return a.name - b.name})
 }
@@ -49,7 +45,6 @@ export const initializeGames = () => {
     const matches = await gameService.getAll()
     
     const games = getAllGames(matches) 
-    console.log('REAL GAMES', games)
     
     dispatch({
       type: 'INIT_GAMES',
@@ -59,7 +54,6 @@ export const initializeGames = () => {
 }
 
 export const saveScores = () => {
-  console.log('SAVETETAAN SCORESIT')
   
 }
 

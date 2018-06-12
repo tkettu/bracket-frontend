@@ -1,8 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom'
-import { Table, Container, Menu, 
-    TableBody, Form } 
-    from 'semantic-ui-react'
+import { Container, Menu } from 'semantic-ui-react'
 
 import { initializeGames, saveScores } from './reducers/gameReducer'
 import { initializeTeams } from './reducers/teamReducer'
@@ -77,15 +75,10 @@ class App extends React.Component {
     console.log(store.getState())
     
     const loggedUserJSON = window.localStorage.getItem(userConstants.LOCAL_STORAGE)
-    console.log(loggedUserJSON)
     
     if (loggedUserJSON) {
-      console.log('ROKIIIIIIASASD')
-      
       const user = JSON.parse(loggedUserJSON)
       bracketService.setToken(user.token)
-      console.log('ROKIIII')
-      
       this.props.initializeBracket()
     }
   }

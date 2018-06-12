@@ -13,7 +13,6 @@ const reducer = (store = [], action) => {
 export const initializeTeams = () => {
   return async (dispatch) => {
     const teams = await teamService.getAll()
-    console.log('TEAMS', teams)
 
     dispatch({
       type: 'INIT_TEAMS',

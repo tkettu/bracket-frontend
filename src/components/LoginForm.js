@@ -1,14 +1,14 @@
 import React from 'react'
 import { Button, Form, Grid, Header,
-         Image, Message, Segment }
+        Message, Segment }
          from 'semantic-ui-react'
 
-import { Redirect } from 'react-router-dom'
+//import { Redirect } from 'react-router-dom'
         
 import { connect } from 'react-redux'
 
 import { login, logout } from '../reducers/loginReducer'
-import authentication from '../reducers/loginReducer'
+//import authentication from '../reducers/loginReducer'
 
 //import store from '../store'
 

@@ -1,27 +1,27 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { Table, Form } from 'semantic-ui-react'
+import { Table, Button } from 'semantic-ui-react'
 
-import { changeScore } from '../reducers/gameReducer'
+//import { changeScore } from '../reducers/gameReducer'
 import { filterChange } from '../reducers/filterReducer'
 
-import store from '../store'
+//import store from '../store'
 
-const handleChange = (props, game, home, away) => {
+/* const handleChange = (props, game, home, away) => {
 
 } 
 
 const scoreStyle = {
   padding: 0,
   width: 100
-}
+} */
 
-const Team = ({team, props}) => {
+const Team = ({team, changeFilter}) => {
   
   if (team !== undefined){
     return(
-      <Table.Cell onClick={() => props.filterChange(team.id)} width={3}>
+      <Table.Cell onClick={() => changeFilter(team.id)} width={3}>
         <a href=
           {`https://en.wikipedia.org/wiki/${(team.name).split(' ').join('_')}_national_football_team`}>
           {team.fifaCode}
@@ -53,11 +53,32 @@ const Result = (game) => (
     {game.home_result} - {game.away_result}
   </Table.Cell>
 )
+
+const BracketTeam = ({ game, team='home', bracket }) => {
+  //const games = props.bracket.bracket.map(g => g.game)
   
+  console.log(bracket.bracket)
+  
+/*   const id = game.name
+  console.log(games.includes(id))
+  console.log(games) */
+  //find if props.bracket.bracket games contains game.name
+  //and return it or 
+  /* const id = game.name
+    console.log(props.bracket.bracket.find(function(element) {
+                    return element.game === id
+    }))
+    console.log(props.bracket.bracket)
+    console.log(game) */
+    return (
+      <input type='number'  onChange={() => console.log('CHAngeTAAN', game.home_team)} /> 
+    )
+}
 //If user logged in veikkaus columni viereen
-const BracketCell = () => (
+const BracketCell = ({ game, bracket }) => (
   <Table.Cell>
-    <input type='text' onChange={() => console.log('CHAngeTAAN')} />
+    <BracketTeam game={game} bracket={bracket} />
+    <input type='number'  onChange={() => console.log('CHAngeTAAN', game.away_team)} />
   </Table.Cell>
 )
 
@@ -72,20 +93,23 @@ const GameList = (props) => (
           <Table.HeaderCell>Koti</Table.HeaderCell>
           <Table.HeaderCell>Vieras</Table.HeaderCell>
           <Table.HeaderCell>Tulos</Table.HeaderCell>
+          <Table.HeaderCell>Veikkaus</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         {props.visibleGames.map(game => 
           <Table.Row key={game.name}>
             <LocDate date={game.date} />
-            <Team team={props.teamList.find(t => t.id === game.home_team)} props={props} />
-            <Team team={props.teamList.find(t => t.id === game.away_team)} props={props} />
+            <Team team={props.teamList.find(t => t.id === game.home_team)} changeFilter={props.filterChange} />
+            <Team team={props.teamList.find(t => t.id === game.away_team)} changeFilter={props.filterChange} />
             <Result game={game}/>
-            <BracketCell />
+            <BracketCell game={game} bracket={props.bracket}/>
           </Table.Row>
         )}
       </Table.Body>  
     </Table>
+    <Button circular  floated={"right"}>
+    </Button>
   </div>
 )
 
@@ -101,6 +125,7 @@ const mapStateToProps = (state) => {
   return {
     //
     teamList: state.teams,
+    bracket: state.bracket,
     visibleGames: gamesToShow(state.games, state.filter)
   }
 }

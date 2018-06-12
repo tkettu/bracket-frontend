@@ -1,6 +1,6 @@
 import loginService from '../services/login'
 import { userConstants } from '../constants/user.constants'
-import { history } from '../_helpers/history'
+//import { history } from '../_helpers/history'
 
 let user = window.localStorage.getItem(userConstants.LOCAL_STORAGE)
 
