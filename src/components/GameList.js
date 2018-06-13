@@ -57,8 +57,8 @@ const Result = (game) => (
 const BracketTeam = ({ game, team='home', bracket }) => {
   //const games = props.bracket.bracket.map(g => g.game)
   
-  console.log(bracket.bracket)
-  
+  console.log(bracket)
+  const score = bracket !== undefined ? bracket.home : 0
 /*   const id = game.name
   console.log(games.includes(id))
   console.log(games) */
@@ -70,8 +70,9 @@ const BracketTeam = ({ game, team='home', bracket }) => {
     }))
     console.log(props.bracket.bracket)
     console.log(game) */
+
     return (
-      <input type='number'  onChange={() => console.log('CHAngeTAAN', game.home_team)} /> 
+      <input type='number'  defaultValue={score} onChange={() => console.log('CHAngeTAAN', game.home_team)} /> 
     )
 }
 //If user logged in veikkaus columni viereen
@@ -103,7 +104,8 @@ const GameList = (props) => (
             <Team team={props.teamList.find(t => t.id === game.home_team)} changeFilter={props.filterChange} />
             <Team team={props.teamList.find(t => t.id === game.away_team)} changeFilter={props.filterChange} />
             <Result game={game}/>
-            <BracketCell game={game} bracket={props.bracket}/>
+            <BracketCell game={game} bracket={props.bracket.bracket !== undefined ? 
+                                    props.bracket.bracket.find(g => game.name ===g.game) : '0' }/>
           </Table.Row>
         )}
       </Table.Body>  
